@@ -2,6 +2,7 @@ package com.example.eventlistener.mailsender;
 
 import com.example.eventlistener.order.OrderEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 public class MailSenderEventListener {
 
+    @Async // 이벤트리스너 메서드를 비동기로 실행할 수 있다.
     @EventListener
     public void defaultEventListener(OrderEvent orderEvent) {
         System.out.println("MailSenderEventListener[default] 트랜잭션 성공 여부 상관 없이 메일을 보냅니다. : " + orderEvent);
