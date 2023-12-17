@@ -1,6 +1,6 @@
 package com.example.eventlistener.pushsender;
 
-import com.example.eventlistener.order.OrderEvent;
+import com.example.eventlistener.order.OrderCreatedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class PushSenderEventListener {
 
     @EventListener
-    public void defaultEventListener(OrderEvent orderEvent) {
+    public void defaultEventListener(OrderCreatedEvent orderEvent) {
         System.out.println("PushSenderEventListener[default] 트랜잭션 성공 여부 상관 없이 푸쉬 알림을 보냅니다. : " + orderEvent);
     }
 }

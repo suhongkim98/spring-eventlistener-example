@@ -1,6 +1,6 @@
 package com.example.eventlistener.mailsender;
 
-import com.example.eventlistener.order.OrderEvent;
+import com.example.eventlistener.order.OrderCreatedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -34,7 +34,7 @@ public class MailSenderEventListener {
 
     @Async // 이벤트리스너 메서드를 비동기로 실행할 수 있다.
     @EventListener
-    public void defaultEventListener(OrderEvent orderEvent) {
+    public void defaultEventListener(OrderCreatedEvent orderEvent) {
         System.out.println("MailSenderEventListener[default] 트랜잭션 성공 여부 상관 없이 메일을 보냅니다. : " + orderEvent);
     }
 
@@ -44,27 +44,27 @@ public class MailSenderEventListener {
      */
     @Order(value = Ordered.HIGHEST_PRECEDENCE)
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
-    public void transactionalEventListenerBeforeCommitOrdered(OrderEvent event) {
+    public void transactionalEventListenerBeforeCommitOrdered(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.BEFORE_COMMIT(Ordered.HIGHEST_PRECEDENCE) ---> " + event);
     }
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
-    public void transactionalEventListenerBeforeCommit(OrderEvent event) {
+    public void transactionalEventListenerBeforeCommit(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.BEFORE_COMMIT ---> " + event);
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void transactionalEventListenerAfterCommit(OrderEvent event) {
+    public void transactionalEventListenerAfterCommit(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.AFTER_COMMIT ---> " + event);
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
-    public void transactionalEventListenerAfterRollback(OrderEvent event) {
+    public void transactionalEventListenerAfterRollback(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.AFTER_ROLLBACK ---> " + event);
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
-    public void transactionalEventListenerAfterCompletion(OrderEvent event) {
+    public void transactionalEventListenerAfterCompletion(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.AFTER_COMPLETION ---> " + event);
     }
 
@@ -74,7 +74,7 @@ public class MailSenderEventListener {
      */
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void transactionalEventListenerAfterCommitRequiredNew(OrderEvent event) {
+    public void transactionalEventListenerAfterCommitRequiredNew(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.AFTER_COMMIT(REQUIRES_NEW) ---> " + event);
     }
 
@@ -84,7 +84,7 @@ public class MailSenderEventListener {
      */
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void transactionalEventListenerAfterCommitAsync(OrderEvent event) {
+    public void transactionalEventListenerAfterCommitAsync(OrderCreatedEvent event) {
         System.out.println("MailSenderEventListener TransactionPhase.AFTER_COMMIT(Async) ---> " + event);
     }
 }
